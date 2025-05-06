@@ -36,13 +36,4 @@ sudo modprobe br_netfilter
 sudo sysctl -w net.ipv4.ip_forward=1
 sudo sysctl --system
 
-# Join the cluster
-echo "Waiting for join command..."
-while [ ! -f /tmp/join-command.txt ]; do
-    sleep 5
-done
-
-echo "Joining the cluster..."
-sudo $(cat /tmp/join-command.txt)
-
 echo "Worker node setup complete!"

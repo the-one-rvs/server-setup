@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e
+# set -e
 
 # Update the system and install dependencies
 sudo apt-get update
@@ -36,13 +36,55 @@ sudo modprobe br_netfilter
 sudo sysctl -w net.ipv4.ip_forward=1
 sudo sysctl --system
 
-# Join the cluster
-echo "Waiting for join command..."
-while [ ! -f /tmp/join-command.txt ]; do
+# Initialize control plane
+sudo kubeadm init --pod-network-cidr=10.244.0.0/16 | tee kubeadm-init.log
+
+# Configure kubectl for the user
+mkdir -p $HOME/.kube
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+# Install CNI (Flannel)
+kubectl apply -f https://github.com/flannel-io/flannel/releases/latest/download/kube-flannel.yml
+
+# Print join command for worker nodes
+echo "Save the join command from kubeadm-init.log to use on worker nodes"
+sudo kubeadm init \
+    --pod-network-cidr=10.244.0.0/16 \
+    --ignore-preflight-errors=Mem \
+    | tee kubeadm-init.log || {
+        echo "Failed to initialize control plane"
+        exit 1
+    }
+
+# Wait for admin.conf to be created
+echo "Waiting for admin.conf to be created..."
+for i in {1..30}; do
+    if [ -f /etc/kubernetes/admin.conf ]; then
+        break
+    fi
     sleep 5
 done
 
-echo "Joining the cluster..."
-sudo $(cat /tmp/join-command.txt)
+if [ ! -f /etc/kubernetes/admin.conf ]; then
+    echo "Timeout waiting for admin.conf"
+    exit 1
+fi
 
-echo "Worker node setup complete!"
+# Configure kubectl for the user
+mkdir -p $HOME/.kube
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+# Install CNI (Flannel)
+kubectl apply -f https://github.com/flannel-io/flannel/releases/latest/download/kube-flannel.yml
+
+# Extract and save join command
+grep -A 2 "kubeadm join" kubeadm-init.log > join-command.txt
+chmod 600 join-command.txt
+echo "Join command saved to join-command.txt"
+
+# Verify cluster status
+echo "Verifying cluster status..."
+kubectl get nodes
+kubectl get pods --all-namespaces

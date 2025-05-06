@@ -3,10 +3,10 @@ sudo apt install openjdk-21-jdk -y
 java -version
 
 #--Jfrog Artifactory---#
-wget https://releases.jfrog.io/artifactory/artifactory-oss/org/artifactory/oss/jfrog-artifactory-oss/7.77.3/jfrog-artifactory-oss-7.77.3-linux.tar.gz
+curl -g -L -O -J 'https://releases.jfrog.io/artifactory/artifactory-pro/org/artifactory/pro/jfrog-artifactory-pro/[RELEASE]/jfrog-artifactory-pro-[RELEASE]-linux.tar.gz'
 
 # Extract
-tar -xvzf jfrog-artifactory-oss-7.77.3-linux.tar.gz
+tar -xvf jfrog-artifactory-pro-7.104.10-linux.tar.gz
 
 # Move to /opt
 sudo mv artifactory-oss-7.77.3 /opt/artifactory

@@ -1,21 +1,21 @@
 #!/bin/bash
 
 # Exit on error
-set -e
+# set -e
 
-# Install required dependencies
-echo "Updating and installing dependencies..."
-sudo apt update -y
-sudo apt install -y openjdk-11-jdk wget curl sudo unzip
+# # Install required dependencies
+# echo "Updating and installing dependencies..."
+# sudo apt update -y
+# sudo apt install -y openjdk-11-jdk wget curl sudo unzip
 
 # Create a nexus user and group
 echo "Creating Nexus user..."
 sudo useradd -M -d /opt/nexus -s /bin/false nexus
 
-# Download Nexus Repository OSS
-echo "Downloading Nexus Repository OSS..."
-cd /opt
-sudo wget https://download.sonatype.com/nexus/3/latest-unix.tar.gz
+# # Download Nexus Repository OSS
+# echo "Downloading Nexus Repository OSS..."
+# cd /opt
+# sudo wget https://download.sonatype.com/nexus/3/latest-unix.tar.gz
 
 # Extract and set permissions
 echo "Extracting Nexus..."

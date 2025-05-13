@@ -1,19 +1,28 @@
 #!/bin/bash
 
-# Update system package list
-sudo apt update
+set -e
 
-# Install prerequisites
-sudo apt install -y gnupg wget
+echo "[+] Updating system..."
+sudo apt-get update -y && sudo apt-get upgrade -y
 
-# Add the MongoDB 5.0 public GPG key
-wget -qO - https://www.mongodb.org/static/pgp/server-5.0.asc | sudo apt-key add -
+echo "[+] Importing MongoDB GPG key..."
+curl -fsSL https://pgp.mongodb.com/server-5.0.asc | sudo gpg -o /usr/share/keyrings/mongodb-server-5.0.gpg --dearmor
 
-# Add MongoDB 5.0 repository to sources list
-echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/5.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-5.0.list
+echo "[+] Creating MongoDB source list..."
+echo "deb [ signed-by=/usr/share/keyrings/mongodb-server-5.0.gpg ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/5.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-5.0.list
 
-# Update package list again after adding MongoDB repository
-sudo apt update
+echo "[+] Updating package index..."
+sudo apt-get update -y
 
-# Install MongoDB 5.0
-sudo apt install -y mongodb-org
+echo "[+] Installing MongoDB 5.0..."
+sudo apt-get install -y mongodb-org
+
+echo "[+] Starting and enabling mongod service..."
+sudo systemctl start mongod
+sudo systemctl enable mongod
+
+echo "[+] Checking mongod status..."
+sudo systemctl status mongod --no-pager
+
+echo "[+] MongoDB installation completed."
+mongod --version

@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: alqo
+  namespace: default
+  labels:
+    app: alqo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: alqo
+  template:
+    metadata:
+      labels:
+        app: alqo
+    spec:
+      containers:
+        - name: elevate
+          image: 192.168.86.113:80/joiller-image-library/alqo
+     

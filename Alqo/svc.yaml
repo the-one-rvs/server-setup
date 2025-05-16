@@ -6,7 +6,7 @@ metadata:
 spec:
   type: NodePort
   selector:
-    app: elevate
+    app: alqo
   ports:
     - port: 9000
       targetPort: 9000

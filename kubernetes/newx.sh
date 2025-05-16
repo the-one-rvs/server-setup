@@ -37,6 +37,8 @@ sudo sed -i 's/SystemdCgroup \= false/SystemdCgroup \= true/g' /etc/containerd/c
 sudo systemctl daemon-reload
 sudo systemctl enable --now containerd
 
+# Check that containerd service is up and running
+systemctl status containerd
 
 curl -LO https://github.com/opencontainers/runc/releases/download/v1.1.12/runc.amd64
 sudo install -m 755 runc.amd64 /usr/local/sbin/runc
@@ -60,14 +62,3 @@ kubelet --version
 kubectl version --client
 
 sudo crictl config runtime-endpoint unix:///var/run/containerd/containerd.sock
-sudo kubeadm init --pod-network-cidr=10.244.0.0/16 
-
-mkdir -p $HOME/.kube
-sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
-sudo chown $(id -u):$(id -g) $HOME/.kube/config
-
-kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.28.0/manifests/tigera-operator.yaml
-
-curl https://raw.githubusercontent.com/projectcalico/calico/v3.28.0/manifests/custom-resources.yaml -O
-
-kubectl apply -f custom-resources.yaml

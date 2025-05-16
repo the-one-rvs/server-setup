@@ -37,8 +37,6 @@ sudo sed -i 's/SystemdCgroup \= false/SystemdCgroup \= true/g' /etc/containerd/c
 sudo systemctl daemon-reload
 sudo systemctl enable --now containerd
 
-# Check that containerd service is up and running
-systemctl status containerd
 
 curl -LO https://github.com/opencontainers/runc/releases/download/v1.1.12/runc.amd64
 sudo install -m 755 runc.amd64 /usr/local/sbin/runc

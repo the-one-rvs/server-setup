@@ -15,8 +15,8 @@ spec:
       labels:
         app: alqo
     spec:
-      imagePullSecrets:
-      -  name: harbor-secret
+      # imagePullSecrets:
+      # -  name: harbor-secret
       containers:
         - name: elevate
           image: 192.168.86.113:80/joiller-image-library/alqo:0.0.12

@@ -14,10 +14,14 @@ spec:
     metadata:
       labels:
         app: alqo
+      annotations:
+        cni.projectcalico.org/ipv4pools: "[\"custom-range-pool\"]"
     spec:
       imagePullSecrets:
-      -  name: harbor-secret
+      - name: harbor-secret
       containers:
         - name: alqo
-          image: 192.168.86.113:80/joiller-image-library/alqo:0.0.12
-     
+          image: 192.168.86.113:80/joiller-image-library/alqo:0.0.13
+          env:
+            - name: MONGODB_IP
+              value: "192.168.86.143"

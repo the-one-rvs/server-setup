@@ -1,0 +1,10 @@
+apiVersion: crd.projectcalico.org/v1
+kind: IPPool
+metadata:
+  name: custom-range-pool
+spec:
+  cidr: 192.168.100.192/26
+  ipipMode: Never
+  vxlanMode: Never
+  natOutgoing: true
+  disabled: false

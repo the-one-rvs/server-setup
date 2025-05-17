@@ -3,7 +3,7 @@ kind: IPPool
 metadata:
   name: custom-range-pool
 spec:
-  cidr: 192.168.100.192/26
+  cidr: 192.168.86.192/26
   ipipMode: Never
   vxlanMode: Never
   natOutgoing: true

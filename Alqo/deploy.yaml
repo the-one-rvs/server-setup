@@ -17,6 +17,7 @@ spec:
       annotations:
         cni.projectcalico.org/ipv4pools: "[\"custom-range-pool\"]"
     spec:
+      hostNetwork: true
       imagePullSecrets:
       - name: harbor-secret
       containers:

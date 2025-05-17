@@ -7,4 +7,4 @@ spec:
   ipipMode: Never
   vxlanMode: Never
   natOutgoing: true
-  disabled: false
+  disabled: true

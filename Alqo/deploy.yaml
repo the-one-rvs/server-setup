@@ -1,26 +1,26 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: alqo
+  name: alqo-new
   namespace: default
   labels:
-    app: alqo
+    app: alqo-new
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: alqo
+      app: alqo-new
   template:
     metadata:
       labels:
-        app: alqo
+        app: alqo-new
       annotations:
         cni.projectcalico.org/ipv4pools: "[\"custom-range-pool\"]"
     spec:
       imagePullSecrets:
       - name: harbor-secret
       containers:
-        - name: alqo
+        - name: alqo-new
           image: 192.168.86.113:80/joiller-image-library/alqo:0.0.13
           env:
             - name: MONGODB_IP

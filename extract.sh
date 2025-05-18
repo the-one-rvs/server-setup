@@ -1,4 +1,5 @@
-SECRET=$(kubectl -n kube-system get sa argocd-manager -o jsonpath="{.secrets[0].name}")
+# Extract manually
+SECRET="argocd-manager-token"
 
 TOKEN=$(kubectl -n kube-system get secret $SECRET -o jsonpath="{.data.token}" | base64 --decode)
 

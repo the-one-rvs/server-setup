@@ -1,3 +1,4 @@
+curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
 helm repo add kargo https://charts.kargo.akuity.io
 helm repo update
 

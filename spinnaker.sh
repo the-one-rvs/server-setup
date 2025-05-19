@@ -69,7 +69,7 @@ hal config provider docker-registry enable
 hal config provider docker-registry account add $DOCKER_REGISTRY_NAME \
   --address $DOCKER_REGISTRY_URL \
   --username $DOCKER_USERNAME \
-  --password $DOCKER_PASSWORD
+  --password $DOCKER_PASSWORD \
   --repositories joiller-image-library/alqo \
   --insecure-registry true
 

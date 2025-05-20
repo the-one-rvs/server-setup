@@ -1,0 +1,27 @@
+apiVersion: kargo.akuity.io/v1alpha1
+kind: Warehouse
+metadata:
+  name: workflow
+  namespace: workflow
+spec:
+  subscriptions:
+  - name: harbor-registry
+    registry:
+      url: http://192.168.86.113:80
+      imagePath: joiller-image-library/alqo
+      # credentials:
+      #   secretRef:
+      #     name: harbor-creds
+      #     usernameKey: username
+      #     passwordKey: password
+      # insecure: true
+    watchInterval: 1m
+    imageSelectionStrategy: SemVer
+  git:
+    url: https://github.com/the-one-rvs/server-setup
+    branch: main
+    # credentials:
+    #   secretRef:
+    #     name: git-creds
+    #     usernameKey: username
+    #     passwordKey: password

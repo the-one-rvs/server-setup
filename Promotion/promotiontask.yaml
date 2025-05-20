@@ -1,0 +1,38 @@
+apiVersion: kargo.akuity.io/v1alpha1
+kind: PromotionTask
+metadata:
+  name: promote
+  namespace: kargo-helm
+spec:
+  vars:
+  - name: image
+    value: 192.168.86.113:80/joiller-image-library/alqo
+  - name: repoURL
+    value: https://github.com/the-one-rvs/server-setup
+  - name: branch
+    value: master
+
+  steps:
+  - uses: git-clone
+    config:
+      repoURL: ${{ vars.repoURL }}
+      checkout:
+      - commit: ${{ commitFrom( vars.repoURL ).ID }}
+        path: ./src
+      - branch: ${{ vars.branch }}
+        path: ./out
+  - uses: yaml-update
+    as: update-image
+    config:
+      path: ./out/${{ ctx.stage }}-helm-alqo/values.yaml
+      updates:
+      - key: image.tag
+        value: ${{ imageFrom( vars.image ).Tag }}
+  - uses: git-commit
+    as: commit
+    config:
+      path: ./out
+      message: ${{ task.outputs['update-image'].commitMessage }}
+  - uses: git-push
+    config:
+      path: ./out

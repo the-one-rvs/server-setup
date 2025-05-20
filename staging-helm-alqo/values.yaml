@@ -1,0 +1,12 @@
+image:
+  repository: 192.168.86.113:80/joiller-image-library/alqo
+  tag: 0.0.12
+  pullPolicy: IfNotPresent
+
+replicaCount: 1
+
+service:
+  type: NodePort
+  port: 9000
+  targetPort: 9000
+  nodePort: 30001

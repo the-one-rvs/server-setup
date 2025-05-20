@@ -1,0 +1,14 @@
+apiVersion: kargo.akuity.io/v1alpha1
+kind: Project 
+metadata:
+  name: workflow
+  annotations: 
+    argocd.argoproj.io/sync-wave: "-1"
+spec: 
+  promotionPolicies:
+  - stage: dev
+    autoPromotionEnabled: true
+  - stage: staging
+    autoPromotionEnabled: false
+  - stage: prod 
+    autoPromotionEnabled: false

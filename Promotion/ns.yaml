@@ -1,0 +1,6 @@
+apiVersion: v1 
+kind: NameSpace
+metadata:
+  name: workflow
+  labels:
+    kargo.akuity.io/project: "true"

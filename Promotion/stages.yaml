@@ -12,7 +12,7 @@ spec:
       name: workflow
     sources: 
       direct: true
-  promotionTemplates:
+  promotionTemplate:
     spec: 
       steps:
         - task:
@@ -33,7 +33,7 @@ spec:
       name: workflow
     sources: 
       direct: true
-  promotionTemplates:
+  promotionTemplate:
     spec: 
       steps:
         - task:
@@ -54,7 +54,7 @@ spec:
       name: workflow
     sources: 
       direct: true
-  promotionTemplates:
+  promotionTemplate:
     spec: 
       steps:
         - task:

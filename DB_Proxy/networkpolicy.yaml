@@ -1,7 +1,7 @@
 apiVersion: crd.projectcalico.org/v1
 kind: NetworkPolicy
 metadata:
-  name: allow-mongo-egress
+  name: allow-mongo-db-egress
   namespace: default
 spec:
   selector: app == 'mongo-proxy'

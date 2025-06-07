@@ -21,14 +21,14 @@ spec:
           - "TCP-LISTEN:27018,fork,reuseaddr"
           - "TCP:192.168.86.143:27017"
         ports:
-          - containerPort: 27018
+          - containerPort: 27017
         readinessProbe:
           tcpSocket:
-            port: 27018
+            port: 27017
           initialDelaySeconds: 5
           periodSeconds: 10
         livenessProbe:
           tcpSocket:
-            port: 27018
+            port: 27017
           initialDelaySeconds: 15
           periodSeconds: 20

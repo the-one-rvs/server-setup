@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongo-proxy-svc
+  namespace: default
+spec:
+  selector:
+    app: mongo-proxy
+  ports:
+  - protocol: TCP
+    port: 27018
+    targetPort: 27018
+  type: ClusterIP

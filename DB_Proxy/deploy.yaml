@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongo-egress-proxy
+  namespace: default
+spec:
+  replicas: 3  # scalable replicas
+  selector:
+    matchLabels:
+      app: mongo-proxy
+  template:
+    metadata:
+      labels:
+        app: mongo-proxy
+    spec:
+      containers:
+      - name: socat
+        image: alpine/socat
+        command: ["socat"]
+        args:
+          - "TCP-LISTEN:27018,fork,reuseaddr"
+          - "TCP:192.168.86.143:27017"
+        ports:
+          - containerPort: 27018
+        readinessProbe:
+          tcpSocket:
+            port: 27018
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        livenessProbe:
+          tcpSocket:
+            port: 27018
+          initialDelaySeconds: 15
+          periodSeconds: 20

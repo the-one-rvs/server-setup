@@ -1,0 +1,23 @@
+apiVersion: crd.projectcalico.org/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-mongo-egress
+  namespace: default
+spec:
+  selector: app == 'mongo-proxy'
+  egress:
+  - action: Allow
+    protocol: TCP
+    destination:
+      nets:
+      - 192.168.86.143/32
+      ports:
+      - 27017
+  - action: Allow
+    # allow DNS and other essential traffic
+    protocol: UDP
+    destination:
+      ports:
+      - 53
+  types:
+  - Egress

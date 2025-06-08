@@ -10,14 +10,22 @@ spec:
     protocol: TCP
     destination:
       nets:
-      - 192.168.86.143/32
+        - 192.168.86.143/32
       ports:
-      - 27017
+        - 27017
   - action: Allow
-    # allow DNS and other essential traffic
     protocol: UDP
     destination:
       ports:
-      - 53
-  types:
-  - Egress
+        - 53
+  - action: Allow  # Allow established connections (return path)
+    protocol: TCP
+    destination:
+      ports:
+        - 443
+        - 80
+  - action: Allow  # Fallback allow all internal cluster traffic
+    destination:
+      nets:
+        - 10.0.0.0/8
+        - 192.168.0.0/16

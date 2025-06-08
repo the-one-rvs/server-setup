@@ -14,10 +14,10 @@ spec:
     metadata:
       labels:
         app: alqo-new
-      annotations:
-        cni.projectcalico.org/ipv4pools: "[\"custom-range-pool\"]"
+      # annotations:
+        # cni.projectcalico.org/ipv4pools: "[\"custom-range-pool\"]"
     spec:
-      hostNetwork: true
+      # hostNetwork: true
       imagePullSecrets:
       - name: harbor-secret
       containers:

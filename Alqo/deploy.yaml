@@ -22,7 +22,7 @@ spec:
       - name: harbor-secret
       containers:
         - name: alqo-new
-          image: 192.168.86.113:80/joiller-image-library/alqo:0.0.13
+          image: 192.168.86.113:80/joiller-image-library/alqo:0.0.21
           env:
             - name: MONGODB_IP
               value: "192.168.86.143"
